@@ -1,6 +1,11 @@
 package util;
 
-public class coord2D {
+public class Coord2D {
+	public Coord2D(int x, int y) {
+		super();
+		this.x = x;
+		this.y = y;
+	}
 	private int x;
 	private int y;
 	public int getX() {
