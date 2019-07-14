@@ -10,9 +10,9 @@ public class Tile {
 	//TODO make private
 	public double[][] heightMap = new double[WIDTH][WIDTH];
 	
-	public Tile(int x, int y) {
-		pos = new Coord2D(x,y);
-		heightMap = generateNoise(x, x+WIDTH, y, y+WIDTH, WIDTH, WIDTH);
+	public Tile(Coord2D pos) {
+		this.pos = pos;
+		heightMap = generateNoise(pos.getX(), pos.getX()+WIDTH, pos.getY(), pos.getY()+WIDTH, WIDTH, WIDTH);
 	}
 	public static int getWidth() {
 		return WIDTH;
@@ -24,7 +24,7 @@ public class Tile {
 		return pos.getY();
 	}
 	private double[][] generateNoise(double xStart, double xEnd, double yStart, double yEnd, int xResolution, int yResolution) {
-		SimplexNoise simplexNoise=new SimplexNoise(100,0.1,5000);
+		SimplexNoise simplexNoise=new SimplexNoise(100,0.2,5000);
 		double[][] result=new double[xResolution][yResolution];
 	    for(int i=0;i<xResolution;i++){
 	        for(int j=0;j<yResolution;j++){
@@ -36,9 +36,12 @@ public class Tile {
 	    return result;
 	}
 	public boolean contains(Coord2D point) {
-		return false;
+		return (point.getX() >= pos.getX() && point.getX() <= pos.getX()+WIDTH) && (point.getY() >= pos.getY() && point.getY() <= pos.getY()+WIDTH);
 	}
 	public double getZ(Coord2D point) {
 		return heightMap[point.getX()-pos.getX()][point.getY()-pos.getY()];
+	}
+	public double getZRelative(Coord2D point) {
+		return heightMap[point.getX()][point.getY()];
 	}
 }
